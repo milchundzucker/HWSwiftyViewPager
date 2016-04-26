@@ -29,24 +29,35 @@ public class HWSwiftyViewPager: UICollectionView, UICollectionViewDelegate {
     
     var pageSelectedDelegate : HWSwiftyViewPagerDelegate?
     
+    override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
+
+        self.setProperDefaults()
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
+        self.setProperDefaults()
+    }
+
+    private func setProperDefaults() {
         self.scrollEnabled = true
         self.pagingEnabled = false
         self.delegate = self
         self.decelerationRate = UIScrollViewDecelerationRateFast
-        
-        self.flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
+
+        if let layout = self.collectionViewLayout as? UICollectionViewFlowLayout {
+            self.flowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
+        } else {
+            self.flowLayout = UICollectionViewFlowLayout()
+        }
+
         self.flowLayout.scrollDirection = .Horizontal
         self.showsHorizontalScrollIndicator = false
         self.showsVerticalScrollIndicator = false
         self.beforeFrame = self.frame
     }
-    
-    
-    
-    
     
     override public func layoutSubviews() {
         super.layoutSubviews()
